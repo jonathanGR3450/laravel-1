@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\app\ProjectController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+// User::create([
+//     "name" => "andres",
+//     "email" => "jonathan.garzon.ruiz@unillanos.edu.co",
+//     "password" => bcrypt("12345678"),
+//     "rol" => "admin"
+// ]);
 
 // crear rutas enviandole parametros opcionales
 Route::get('saludo/{nombre?}', function ($nombre = 'invitado')
@@ -65,3 +72,5 @@ Route::post('contact', 'app\MessageController@store')->name("contact.store");
 Auth::routes(['register' =>true]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('user', "users\UserController");
