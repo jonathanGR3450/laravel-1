@@ -73,4 +73,9 @@ Auth::routes(['register' =>true]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Route::middleware(['auth'])->group(function ()
+// {
+//     Route::resource('user', "users\UserController");
+// });
+
 Route::resource('user', "users\UserController");

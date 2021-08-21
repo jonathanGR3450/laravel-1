@@ -32,9 +32,11 @@
                         <a class="nav-link {{ setActive('login') }}" href="{{ route('login') }}">Login</a>
                     </li>
                 @else
-                    <li class="nav-item">
-                        <a class="nav-link {{ setActive('user.*') }}" href="{{ route('user.index') }}">Usuarios</a>
-                    </li>
+                    @if (auth()->user()->hasRole(['admin', 'student']))
+                        <li class="nav-item">
+                            <a class="nav-link {{ setActive('user.*') }}" href="{{ route('user.index') }}">Usuarios</a>
+                        </li>
+                    @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ auth()->user()->name }}

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware(['auth', 'roles:admin,student']);
+    }
+
     /**
      * Display a listing of the resource.
      *
