@@ -61,6 +61,7 @@ Route::post('contact', 'app\MessageController@store')->name("contact.store");
 
 
 // video 35
-Auth::routes(['register' =>false]);
+// se puede enviar array con las rutas que no van incluidas
+Auth::routes(['register' =>true]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
