@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\app\ProjectController;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-// User::create([
-//     "name" => "andres",
-//     "email" => "jonathan.garzon.ruiz@unillanos.edu.co",
-//     "password" => bcrypt("12345678"),
-//     "rol" => "admin"
+// Role::create([
+//     "name" => "mod",
+//     "display_name" => "moderator",
+//     "description" => 'moderador del sitio',
 // ]);
 
 // crear rutas enviandole parametros opcionales
@@ -79,3 +79,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 // });
 
 Route::resource('user', "users\UserController");
+
+Route::get('roles', function ()
+{
+    return Role::with('user')->get();
+});
