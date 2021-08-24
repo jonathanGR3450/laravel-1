@@ -26,6 +26,28 @@ use Illuminate\Support\Facades\Route;
 //     "display_name" => "moderator",
 //     "description" => 'moderador del sitio',
 // ]);
+// Role::create([
+//     "name" => "admin",
+//     "display_name" => "administrator",
+//     "description" => 'administrador del sitio',
+// ]);
+
+// User::create([
+//     "name" => "jonathan garzon",
+//     "email" => "jonatangarzon95@gmail.com",
+//     "password" => bcrypt('12345678'),
+// ]);
+
+// User::create([
+//     "name" => "andres garzon",
+//     "email" => "cemunidosprueba@gmail.com",
+//     "password" => bcrypt('12345678'),
+// ]);
+// User::create([
+//     "name" => "jaime garzon",
+//     "email" => "jonathan.garzon.ruiz@unillanos.edu.co",
+//     "password" => bcrypt('12345678'),
+// ]);
 
 // crear rutas enviandole parametros opcionales
 Route::get('saludo/{nombre?}', function ($nombre = 'invitado')
