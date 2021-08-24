@@ -20,8 +20,8 @@ class Role extends Model
         'updated_at'
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, "assigned_roles");
     }
 }

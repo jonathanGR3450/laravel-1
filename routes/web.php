@@ -104,5 +104,5 @@ Route::resource('user', "users\UserController");
 
 Route::get('roles', function ()
 {
-    return Role::with('user')->get();
+    return Role::with('users')->get();
 });
