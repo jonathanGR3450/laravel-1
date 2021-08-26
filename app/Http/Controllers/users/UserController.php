@@ -11,8 +11,8 @@ class UserController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('auth');
-        $this->middleware('roles:admin,student', ['except' => 'edit']);
+        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('roles:admin,student', ['except' => ['edit', 'update', 'show']]);
     }
 
     /**
@@ -59,9 +59,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -72,6 +72,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('edit', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -84,6 +85,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        $this->authorize('edit', $user);
         $user->name = $request->name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
@@ -101,6 +103,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('destroy', $user);
         $user->delete();
         return redirect()->route("user.index")->with("status", 'Se elimino el registro con exito');
     }
