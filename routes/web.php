@@ -33,18 +33,21 @@ use Illuminate\Support\Facades\Route;
 // ]);
 
 // User::create([
-//     "name" => "jonathan garzon",
+//     "name" => "jonathan",
+//     "last_name" => "garzon",
 //     "email" => "jonatangarzon95@gmail.com",
 //     "password" => bcrypt('12345678'),
 // ]);
 
 // User::create([
-//     "name" => "andres garzon",
+//     "name" => "andres",
+//     "last_name" => "garzon",
 //     "email" => "cemunidosprueba@gmail.com",
 //     "password" => bcrypt('12345678'),
 // ]);
 // User::create([
-//     "name" => "jaime garzon",
+//     "name" => "jaime",
+//     "last_name" => "garzon",
 //     "email" => "jonathan.garzon.ruiz@unillanos.edu.co",
 //     "password" => bcrypt('12345678'),
 // ]);

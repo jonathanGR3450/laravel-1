@@ -43,7 +43,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                         <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Logout</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.edit', auth()->user()) }}">Mi cuenta</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>

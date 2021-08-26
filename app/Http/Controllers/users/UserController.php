@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\users\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,8 @@ class UserController extends Controller
 {
 
     public function __construct() {
-        $this->middleware([
-            'auth',
-            'roles:admin,student'
-        ]);
+        $this->middleware('auth');
+        $this->middleware('roles:admin,student', ['except' => 'edit']);
     }
 
     /**
@@ -34,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view("users.create", ["user" => new User()]);
     }
 
     /**
@@ -43,9 +42,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        User::create([
+            "name"      => $request->name,
+            "last_name" => $request->last_name,
+            "email"     => $request->email,
+            "password"  => bcrypt($request->password),
+        ]);
+        return redirect()->route("user.index")->with("status", "Se creo el registro exitosamente");
     }
 
     /**
@@ -65,9 +70,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -77,9 +82,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+        // User::where(["id" => $user->id])->update($request->validated());
+        return redirect()->route("user.index")->with("status", "Se actualizo el registro $user->id exitosamente");
     }
 
     /**
@@ -88,8 +99,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route("user.index")->with("status", 'Se elimino el registro con exito');
     }
 }

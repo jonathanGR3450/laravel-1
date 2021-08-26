@@ -31,13 +31,24 @@
                                         <li>{{ $role->display_name }}</li>
                                     @endforeach
                                 </td>
-                                <td></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a class="btn btn-primary" href="{{ route('user.edit', $user) }}">Edit</a>
+                                        <a class="btn btn-danger" href="#" onclick="document.getElementById('delete-user').submit()">Delete</a>
+                                    </div>
+                                    <form class="d-none" id="delete-user" action="{{ route("user.destroy", $user) }}" method="post">
+                                        @csrf @method("DELETE")
+                                    </form>
+                                </td>
                             </tr>
                         @empty
                             No hay informacion
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="col-12">
+                <a href="{{ route('user.create') }}" class="btn btn-secondary btn-lg btn-block">Nuevo Usuario</a>
             </div>
         </div>
     </div>
