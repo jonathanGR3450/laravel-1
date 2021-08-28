@@ -32,7 +32,7 @@
                         <a class="nav-link {{ setActive('login') }}" href="{{ route('login') }}">Login</a>
                     </li>
                 @else
-                    @if (auth()->user()->hasRole(['admin', 'student']))
+                    @if (auth()->user()->hasRole(['admin']))
                         <li class="nav-item">
                             <a class="nav-link {{ setActive('user.*') }}" href="{{ route('user.index') }}">Usuarios</a>
                         </li>

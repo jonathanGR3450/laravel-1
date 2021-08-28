@@ -27,9 +27,7 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    @foreach ($user->roles as $role)
-                                        <li>{{ $role->display_name }}</li>
-                                    @endforeach
+                                    {!! $user->roles->pluck('display_name')->implode(' - ') !!}
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
