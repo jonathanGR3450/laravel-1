@@ -86,9 +86,8 @@ Route::get('/about', function ()
 
 Route::resource('project', 'app\ProjectController');
 
-Route::view('/contact', 'contact')->name('contact');
 
-Route::post('contact', 'app\MessageController@store')->name("contact.store");
+Route::resource('message', 'app\MessageController');
 
 
 

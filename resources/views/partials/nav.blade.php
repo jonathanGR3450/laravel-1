@@ -24,15 +24,18 @@
                 <li class="nav-item">
                     <a class="nav-link {{ setActive('project.*') }}" href="{{ route('project.index') }}">@lang('Portfolio')</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ setActive('contact') }}" href="{{ route('contact') }}">@lang('Contact')</a>
-                </li>
                 @guest
+                    <li class="nav-item">
+                        <a class="nav-link {{ setActive('message.*') }}" href="{{ route('message.create') }}">@lang('Contact')</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ setActive('login') }}" href="{{ route('login') }}">Login</a>
                     </li>
                 @else
                     @if (auth()->user()->hasRole(['admin']))
+                        <li class="nav-item">
+                            <a href="{{ route('message.index') }}" class="nav-link {{ setActive('message.*') }}">Mensajes</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link {{ setActive('user.*') }}" href="{{ route('user.index') }}">Usuarios</a>
                         </li>

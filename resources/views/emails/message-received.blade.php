@@ -8,9 +8,9 @@
 </head>
 <body>
     {{-- {{ var_dump($msg) }} --}}
-    <p>Recibiste un email de {{ $msg['name'] }} - {{ $msg['email'] }}</p>
+    <p>Recibiste un email de {{ $msg->name . ' ' . $msg->last_name }} - {{ $msg->email }}</p>
 
-    <p><strong>Asunto: </strong>{{ $msg['subject'] }}</p>
-    <p><strong>Contenido: </strong>{{ $msg['content'] }}</p>
+    <p><strong>Asunto: </strong>{{ $msg->subject }}</p>
+    <p><strong>Contenido: </strong>{{ $msg->content }}</p>
 </body>
 </html>

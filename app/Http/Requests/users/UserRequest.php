@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        if (auth()->user()->hasRole(['admin'])) {
+        if (auth()->user()->isAdmin()) {
             return true;
         } else {
             return false;

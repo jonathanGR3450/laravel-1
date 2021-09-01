@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'assigned_roles');
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     public function hasRole(array $roles)
     {
         return $this->roles->pluck('name')->intersect($roles)->count();

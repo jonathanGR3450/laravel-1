@@ -32,9 +32,9 @@
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a class="btn btn-primary" href="{{ route('user.edit', $user) }}">Edit</a>
-                                        <a class="btn btn-danger" href="#" onclick="document.getElementById('delete-user').submit()">Delete</a>
+                                        <a class="btn btn-danger" href="#" onclick="document.getElementById('{{'delete-user-' . $user->id }}').submit()">Delete</a>
                                     </div>
-                                    <form class="d-none" id="delete-user" action="{{ route("user.destroy", $user) }}" method="post">
+                                    <form class="d-none" id="{{"delete-user-$user->id"}}" action="{{ route("user.destroy", $user) }}" method="post">
                                         @csrf @method("DELETE")
                                     </form>
                                 </td>
