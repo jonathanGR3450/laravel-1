@@ -90,6 +90,7 @@ class MessageController extends Controller
         $message->subject = $request->subject;
         $message->content = $request->content;
         $message->save();
+        Mail::to('jonatangarzon95@gmail.com')->queue(new MessageReceived($message));
         return redirect()->route('message.index')->with('status','El registro se actualizo correctamente');
     }
 
