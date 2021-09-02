@@ -27,12 +27,20 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->id) {
+            return [
+                "name"                      => "required",
+                "last_name"                 => "required",
+                'email'                     => 'email|required|unique:users,email,' . $this->id, // unique se envia parametros con dos puntos, se envia la tabla, el campo y el id
+            ];
+        }
         return [
-            "name"      => "required",
-            "last_name" => "required",
-            'email'     => 'email|required|unique:users,email,' . $this->id, // unique se envia parametros con dos puntos, se envia la tabla, el campo y el id
-            "password"  => "required"
-        ];
+                "name"                      => "required",
+                "last_name"                 => "required",
+                'email'                     => 'email|required|unique:users,email,' . $this->id, // unique se envia parametros con dos puntos, se envia la tabla, el campo y el id
+                "password"                  => "required|confirmed",
+                "password_confirmation"     => "required"
+            ];
     }
 
     public function messages()
@@ -40,17 +48,19 @@ class UserRequest extends FormRequest
         return [
             "required"  => "El campo :attribute es requerido",
             "email"     => "El campo :attribute debe ser un correo valido",
-            "unique"    => "El campo :attribute ya esta registrado en la base de datos"
+            "unique"    => "El campo :attribute ya esta registrado en la base de datos",
+            'confirmed' => "El campo :attribute no coincide con el campo Confirmar Contraseña"
         ];
     }
 
     public function attributes()
     {
         return [
-            "name"      => "Nombre",
-            "last_name" => "Apellido",
-            'email'     => 'Correo Electronico',
-            "password"  => "Contraseña"
+            "name"                  => "Nombre",
+            "last_name"             => "Apellido",
+            'email'                 => 'Correo Electronico',
+            "password"              => "Contraseña",
+            "password_confirmation" => "Confirmar Contraseña"
         ];
     }
 }

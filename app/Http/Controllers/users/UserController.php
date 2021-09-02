@@ -4,6 +4,7 @@ namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\users\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("users.create", ["user" => new User()]);
+        $roles = Role::pluck('display_name', 'id');
+        return view("users.create", ["user" => new User(), 'roles' => $roles]);
     }
 
     /**
@@ -44,12 +46,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        User::create([
-            "name"      => $request->name,
-            "last_name" => $request->last_name,
-            "email"     => $request->email,
-            "password"  => bcrypt($request->password),
-        ]);
+        // dd($request->all());
+        $user = User::create($request->validated());
+        $user->roles()->attach($request->roles);
         return redirect()->route("user.index")->with("status", "Se creo el registro exitosamente");
     }
 
@@ -72,9 +71,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        dd($user);
+        // dd($user);
         $this->authorize('edit', $user);
-        return view('users.edit', compact('user'));
+        $roles = Role::pluck('display_name', 'id');
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -86,13 +86,10 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        // dd($request->all());
         $this->authorize('edit', $user);
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
-        // User::where(["id" => $user->id])->update($request->validated());
+        $user->update($request->validated());
+        $user->roles()->sync($request->roles);
         return redirect()->route("user.index")->with("status", "Se actualizo el registro $user->id exitosamente");
     }
 

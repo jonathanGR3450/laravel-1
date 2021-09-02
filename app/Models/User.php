@@ -62,4 +62,20 @@ class User extends Authenticatable
     {
         return $this->hasRole(['admin']);
     }
+
+    // funcion mutadora, sirve para hacer una accion antes de guardar, el nombre debe ser set Campo Attribute
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strtoupper($name);
+    }
+
+    public function setLastNameAttribute($last_name)
+    {
+        $this->attributes['last_name'] = strtoupper($last_name);
+    }
 }
