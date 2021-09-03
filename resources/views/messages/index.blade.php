@@ -15,6 +15,7 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>Email</th>
+                            <th>Etiquetas</th>
                             <th>Nota</th>
                             <th>Asunto</th>
                             <th>Mensaje</th>
@@ -33,6 +34,7 @@
                                     <td>{{ $message->last_name }}</td>
                                     <td>{{ $message->email }}</td>
                                 @endif
+                                <td>{{ $message->tags->pluck('name')->implode(', ') }}</td>
                                 <td>{{ $message->note->body }}</td>
                                 <td>{{ $message->subject }}</td>
                                 <td><a href="{{ route('message.show', $message) }}">{{ $message->content }}</a></td>

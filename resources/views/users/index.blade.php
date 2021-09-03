@@ -15,6 +15,7 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Email</th>
+                            <th>Etiquetas</th>
                             <th>Nota</th>
                             <th>Rol</th>
                             <th>Accion</th>
@@ -27,6 +28,7 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->tags->pluck('name')->implode(', ') }}</td>
                                 <td>{{ $user->note->body ?? '' }}</td>
                                 <td>
                                     {!! $user->roles->pluck('display_name')->implode(' - ') !!}

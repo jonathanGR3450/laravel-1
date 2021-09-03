@@ -3,6 +3,7 @@
 use App\Http\Controllers\app\ProjectController;
 use App\Models\Note;
 use App\Models\Role;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Tag::create([
+//     "name" => "importante",
+// ]);
+
+// Tag::create([
+//     "name" => "no importante",
+// ]);
 
 // Note::create([
 //     "body" => "nota usuario dos",
