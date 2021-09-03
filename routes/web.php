@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\app\ProjectController;
+use App\Models\Note;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+// Note::create([
+//     "body" => "nota mensaje ocho",
+//     'message_id' => '8',
+// ]);
+
+// Note::create([
+//     "body" => "nota mensaje tres",
+//     'message_id' => '3',
+// ]);
 
 // Route::get('/', function () {
 //     return view('welcome');

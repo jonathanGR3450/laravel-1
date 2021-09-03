@@ -15,6 +15,7 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>Email</th>
+                            <th>Nota</th>
                             <th>Asunto</th>
                             <th>Mensaje</th>
                             <th>Acciones</th>
@@ -32,6 +33,7 @@
                                     <td>{{ $message->last_name }}</td>
                                     <td>{{ $message->email }}</td>
                                 @endif
+                                <td>{{ $message->note->body }}</td>
                                 <td>{{ $message->subject }}</td>
                                 <td><a href="{{ route('message.show', $message) }}">{{ $message->content }}</a></td>
                                 <td>
