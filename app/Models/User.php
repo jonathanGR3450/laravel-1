@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         $this->attributes['last_name'] = strtoupper($last_name);
     }
+    
+    public function note()
+    {
+        return $this->morphOne(Note::class, 'notable');
+    }
 }

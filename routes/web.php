@@ -20,13 +20,27 @@ use Illuminate\Support\Facades\Route;
 
 
 // Note::create([
+//     "body" => "nota usuario dos",
+//     'notable_id' => '2',
+//     'notable_type' => 'App\Models\User',
+// ]);
+
+// Note::create([
+//     "body" => "nota usuario tres",
+//     'notable_id' => '3',
+//     'notable_type' => 'App\Models\User',
+// ]);
+
+// Note::create([
 //     "body" => "nota mensaje ocho",
-//     'message_id' => '8',
+//     'notable_id' => '8',
+//     'notable_type' => 'App\Models\Message',
 // ]);
 
 // Note::create([
 //     "body" => "nota mensaje tres",
-//     'message_id' => '3',
+//     'notable_id' => '3',
+//     'notable_type' => 'App\Models\Message',
 // ]);
 
 // Route::get('/', function () {

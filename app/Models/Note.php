@@ -9,7 +9,7 @@ class Note extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['body', 'message_id'];
+    protected $fillable = ['body', 'notable_id', 'notable_type'];
 
     public $timestamps = true;
 
@@ -18,8 +18,8 @@ class Note extends Model
         'updated_at'
     ];
 
-    public function message()
+    public function notable()
     {
-        return $this->belongsTo(Message::class);
+        return $this->morphTo();
     }
 }
