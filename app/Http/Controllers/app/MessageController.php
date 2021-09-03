@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\messages\MessageRequest;
 use App\Mail\MessageReceived;
 use App\Models\Message;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -74,7 +75,6 @@ class MessageController extends Controller
      */
     public function edit(Message $message)
     {
-        // dd(compact('message'));
         return view('messages.edit', compact('message'));
     }
 

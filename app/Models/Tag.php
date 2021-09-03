@@ -22,4 +22,9 @@ class Tag extends Model
     {
         return $this->morphedByMany(Message::class, 'taggable');
     }
+
+    public function users()
+    {
+        return $this->morphedByMany(User::class, 'taggable');
+    }
 }
