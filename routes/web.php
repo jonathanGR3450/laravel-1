@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// DB::listen(function ($query)
+// {
+//     echo "<pre>$query->sql</pre>";
+// });
 
 // Tag::create([
 //     "name" => "importante",

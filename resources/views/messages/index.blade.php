@@ -35,7 +35,7 @@
                                     <td>{{ $message->email }}</td>
                                 @endif
                                 <td>{{ $message->tags->pluck('name')->implode(', ') }}</td>
-                                <td>{{ $message->note->body }}</td>
+                                <td>{{ $message->note->body ?? '' }}</td>
                                 <td>{{ $message->subject }}</td>
                                 <td><a href="{{ route('message.show', $message) }}">{{ $message->content }}</a></td>
                                 <td>

@@ -1,7 +1,7 @@
 @csrf
 <h1 class="display-4">contacto</h1>
 {{-- {{ dd($message->subject) }} --}}
-@guest
+@if ($showInputs)
     <div class="form-group">
         <label for="name">Nombres</label>
         <input type="text" class="form-control bg-light shadow-sm @error('name') is-invalid @else border-0  @enderror"
@@ -33,7 +33,7 @@
             </span>
         @enderror
     </div>
-@endguest
+@endif
 <div class="form-group">
     <label for="subject">Asunto</label>
     <input class="form-control bg-light shadow-sm @error('subject') is-invalid @else border-0 @enderror"

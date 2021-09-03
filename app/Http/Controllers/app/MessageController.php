@@ -23,7 +23,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $msgs = Message::latest('created_at')->get();
+        // $msgs = Message::latest('created_at')->get();
+        $msgs = Message::with(['user', 'tags', 'note'])->get();
         return view('messages.index', compact('msgs'));
     }
 
