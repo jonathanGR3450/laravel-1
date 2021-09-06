@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\app;
 
+use App\Events\MessageWasReceibed;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\messages\MessageRequest;
 use App\Mail\MessageReceived;
@@ -53,7 +54,7 @@ class MessageController extends Controller
             $msg->save();
         }
 
-        Mail::to('jonatangarzon95@gmail.com')->queue(new MessageReceived($msg));
+        event(new MessageWasReceibed($msg));
         return back()->with("status", "se envio tu mensaje");
     }
 
