@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
@@ -24,10 +25,13 @@ class MessageController extends Controller
      */
     public function index()
     {
-        // $msgs = Message::latest('created_at')->get();
-        $msgs = Message::with(['user', 'tags', 'note'])
-        ->orderBy('created_at', request('sorted', 'ASC'))
-        ->paginate(10);
+        $key = 'message.page.' . request('page', 1);
+        $msgs = Cache::rememberForever($key, function ()
+        {
+            return Message::with(['user', 'tags', 'note'])
+            ->orderBy('created_at', request('sorted', 'ASC'))
+            ->paginate(10);
+        });
         return view('messages.index', compact('msgs'));
     }
 
@@ -57,6 +61,7 @@ class MessageController extends Controller
         }
 
         event(new MessageWasReceibed($msg));
+        Cache::flush();
         return back()->with("status", "se envio tu mensaje");
     }
 
@@ -95,6 +100,7 @@ class MessageController extends Controller
         $message->content = $request->content;
         $message->save();
         Mail::to('jonatangarzon95@gmail.com')->queue(new MessageReceived($message));
+        Cache::flush();
         return redirect()->route('message.index')->with('status','El registro se actualizo correctamente');
     }
 
@@ -107,6 +113,7 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         $message->delete();
+        Cache::flush();
         return back()->with('status', 'Se elimino el registro con exito');
     }
 }
