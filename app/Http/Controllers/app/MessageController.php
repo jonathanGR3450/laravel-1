@@ -25,7 +25,9 @@ class MessageController extends Controller
     public function index()
     {
         // $msgs = Message::latest('created_at')->get();
-        $msgs = Message::with(['user', 'tags', 'note'])->get();
+        $msgs = Message::with(['user', 'tags', 'note'])
+        ->orderBy('created_at', request('sorted', 'ASC'))
+        ->paginate(10);
         return view('messages.index', compact('msgs'));
     }
 

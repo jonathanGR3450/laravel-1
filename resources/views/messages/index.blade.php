@@ -53,6 +53,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $msgs->appends(request()->query())->links('pagination::default') }}
             </div>
             <div class="col-12">
                 <a href="{{ route('message.create') }}" class="btn btn-primary btn-lg btn-block">Nuevo Mensaje</a>
