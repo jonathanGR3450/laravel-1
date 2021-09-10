@@ -26,7 +26,7 @@ class MessageController extends Controller
     public function index()
     {
         $key = 'message.page.' . request('page', 1);
-        $msgs = Cache::rememberForever($key, function ()
+        $msgs = Cache::tags('message')->rememberForever($key, function ()
         {
             return Message::with(['user', 'tags', 'note'])
             ->orderBy('created_at', request('sorted', 'ASC'))
@@ -61,7 +61,7 @@ class MessageController extends Controller
         }
 
         event(new MessageWasReceibed($msg));
-        Cache::flush();
+        Cache::tags('message')->flush();
         return back()->with("status", "se envio tu mensaje");
     }
 
@@ -100,7 +100,7 @@ class MessageController extends Controller
         $message->content = $request->content;
         $message->save();
         Mail::to('jonatangarzon95@gmail.com')->queue(new MessageReceived($message));
-        Cache::flush();
+        Cache::tags('message')->flush();
         return redirect()->route('message.index')->with('status','El registro se actualizo correctamente');
     }
 
@@ -113,7 +113,7 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         $message->delete();
-        Cache::flush();
+        Cache::tags('message')->flush();
         return back()->with('status', 'Se elimino el registro con exito');
     }
 }
