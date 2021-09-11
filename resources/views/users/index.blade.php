@@ -26,7 +26,7 @@
                         @forelse ($users as $user)
                             <tr>
                                 <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
+                                <td><a href="{{ route('user.show', $user) }}">{{ $user->name }}</a></td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->tags->pluck('name')->implode(', ') }}</td>
                                 <td>{{ $user->note->body ?? '' }}</td>

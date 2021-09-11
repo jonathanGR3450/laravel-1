@@ -12,11 +12,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Repositories\Messages\MessageRepository;
 
 class MessageController extends Controller
 {
-    public function __construct() {
+    private $messageRepository;
+
+    public function __construct(MessageRepository $messageRepository) {
+        $this->messageRepository = $messageRepository;
         $this->middleware('auth')->except('store', 'create');
+        $this->middleware('roles:admin')->except('store', 'create');
     }
     /**
      * Display a listing of the resource.
@@ -25,13 +30,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $key = 'message.page.' . request('page', 1);
-        $msgs = Cache::tags('message')->rememberForever($key, function ()
-        {
-            return Message::with(['user', 'tags', 'note'])
-            ->orderBy('created_at', request('sorted', 'ASC'))
-            ->paginate(10);
-        });
+        $msgs = $this->messageRepository->getMessages();
         return view('messages.index', compact('msgs'));
     }
 
@@ -42,7 +41,8 @@ class MessageController extends Controller
      */
     public function create()
     {
-        return view('messages.create')->with(['message' => new Message]);
+        $message = $this->messageRepository->getVoidMessage();
+        return view('messages.create')->with(compact('message'));
     }
 
     /**
@@ -53,15 +53,9 @@ class MessageController extends Controller
      */
     public function store(MessageRequest $request)
     {
-        $msg = Message::create($request->validated());
-        //dd($msg);
-        if (Auth::check()) {
-            $msg->user_id = Auth::user()->id;
-            $msg->save();
-        }
+        $msg = $this->messageRepository->store($request);
 
         event(new MessageWasReceibed($msg));
-        Cache::tags('message')->flush();
         return back()->with("status", "se envio tu mensaje");
     }
 
@@ -73,7 +67,8 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        //
+        $msg = $this->messageRepository->getMessageById($id);
+        return view('messages.show', compact('msg'));
     }
 
     /**
@@ -82,8 +77,9 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Message $message)
+    public function edit($id)
     {
+        $message = $this->messageRepository->getMessageById($id);
         return view('messages.edit', compact('message'));
     }
 
@@ -94,13 +90,9 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MessageRequest $request, Message $message)
+    public function update(MessageRequest $request, $id)
     {
-        $message->subject = $request->subject;
-        $message->content = $request->content;
-        $message->save();
-        Mail::to('jonatangarzon95@gmail.com')->queue(new MessageReceived($message));
-        Cache::tags('message')->flush();
+        $message = $this->messageRepository->update($request, $id);
         return redirect()->route('message.index')->with('status','El registro se actualizo correctamente');
     }
 
@@ -110,10 +102,9 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Message $message)
+    public function destroy($id)
     {
-        $message->delete();
-        Cache::tags('message')->flush();
-        return back()->with('status', 'Se elimino el registro con exito');
+        $this->messageRepository->destroy($id);
+        return redirect()->route('message.index')->with('status', 'Se elimino el registro con exito');
     }
 }
