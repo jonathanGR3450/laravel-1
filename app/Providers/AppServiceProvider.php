@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Repositories\Messages\MessageDecorator;
+use App\Http\Repositories\Messages\MessageInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            MessageInterface::class,
+            MessageDecorator::class
+        );
     }
 
     /**

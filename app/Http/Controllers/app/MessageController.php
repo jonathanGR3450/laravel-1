@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers\app;
 
-use App\Events\MessageWasReceibed;
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\Messages\MessageInterface;
 use App\Http\Requests\messages\MessageRequest;
-use App\Mail\MessageReceived;
-use App\Models\Message;
-use App\Models\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Repositories\Messages\MessageRepository;
 
 class MessageController extends Controller
 {
-    private $messageRepository;
+    private $message;
 
-    public function __construct(MessageRepository $messageRepository) {
-        $this->messageRepository = $messageRepository;
+    public function __construct(MessageInterface $message)
+    {
+        $this->message = $message;
         $this->middleware('auth')->except('store', 'create');
         $this->middleware('roles:admin')->except('store', 'create');
     }
@@ -30,7 +23,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $msgs = $this->messageRepository->getMessages();
+        $msgs = $this->message->getMessages();
         return view('messages.index', compact('msgs'));
     }
 
@@ -41,7 +34,7 @@ class MessageController extends Controller
      */
     public function create()
     {
-        $message = $this->messageRepository->getVoidMessage();
+        $message = $this->message->getVoidMessage();
         return view('messages.create')->with(compact('message'));
     }
 
@@ -53,9 +46,8 @@ class MessageController extends Controller
      */
     public function store(MessageRequest $request)
     {
-        $msg = $this->messageRepository->store($request);
+        $msg = $this->message->store($request);
 
-        event(new MessageWasReceibed($msg));
         return back()->with("status", "se envio tu mensaje");
     }
 
@@ -67,7 +59,7 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        $msg = $this->messageRepository->getMessageById($id);
+        $msg = $this->message->getMessageById($id);
         return view('messages.show', compact('msg'));
     }
 
@@ -79,7 +71,7 @@ class MessageController extends Controller
      */
     public function edit($id)
     {
-        $message = $this->messageRepository->getMessageById($id);
+        $message = $this->message->getMessageById($id);
         return view('messages.edit', compact('message'));
     }
 
@@ -92,8 +84,8 @@ class MessageController extends Controller
      */
     public function update(MessageRequest $request, $id)
     {
-        $message = $this->messageRepository->update($request, $id);
-        return redirect()->route('message.index')->with('status','El registro se actualizo correctamente');
+        $message = $this->message->update($request, $id);
+        return redirect()->route('message.index')->with('status', 'El registro se actualizo correctamente');
     }
 
     /**
@@ -104,7 +96,7 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
-        $this->messageRepository->destroy($id);
+        $this->message->destroy($id);
         return redirect()->route('message.index')->with('status', 'Se elimino el registro con exito');
     }
 }

@@ -10,13 +10,9 @@ class MessageRepository {
 
     public function getMessages()
     {
-        $key = 'message.page.' . request('page', 1);
-        return Cache::tags('message')->rememberForever($key, function ()
-        {
-            return Message::with(['user', 'tags', 'note'])
-            ->orderBy('created_at', request('sorted', 'ASC'))
-            ->paginate(10);
-        });
+        return Message::with(['user', 'tags', 'note'])
+        ->orderBy('created_at', request('sorted', 'ASC'))
+        ->paginate(10);
     }
 
     public function store($request)
@@ -24,10 +20,10 @@ class MessageRepository {
         $msg = Message::create($request->validated());
         //dd($msg);
         if (Auth::check()) {
-            $msg->user_id = Auth::user()->id;
-            $msg->save();
+            $msg->update([
+                'user_id' => Auth::user()->id,
+            ]);
         }
-        Cache::tags('message')->flush();
         return $msg;
     }
 
@@ -43,7 +39,6 @@ class MessageRepository {
 
     public function update($request, $id)
     {
-        Cache::tags('message')->flush();
         return Message::findOrFail($id)->update($request->validated());
     }
 
