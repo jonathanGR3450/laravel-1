@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Presenters\Messages\MessagePresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,5 +36,10 @@ class Message extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function present()
+    {
+        return new MessagePresenter($this);
     }
 }

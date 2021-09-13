@@ -25,19 +25,13 @@
                     <tbody>
                         @forelse ($msgs as $message)
                             <tr>
-                                @if ($message->user_id)
-                                    <td>{{ $message->user->name }}</td>
-                                    <td>{{ $message->user->last_name }}</td>
-                                    <td>{{ $message->user->email }}</td>
-                                @else
-                                    <td>{{ $message->name }}</td>
-                                    <td>{{ $message->last_name }}</td>
-                                    <td>{{ $message->email }}</td>
-                                @endif
-                                <td>{{ $message->tags->pluck('name')->implode(', ') }}</td>
-                                <td>{{ $message->note->body ?? '' }}</td>
-                                <td>{{ $message->subject }}</td>
-                                <td><a href="{{ route('message.show', $message) }}">{{ $message->content }}</a></td>
+                                <td>{{ $message->present()->getName() }}</td>
+                                <td>{{ $message->present()->getLastName() }}</td>
+                                <td>{{ $message->present()->getEmail() }}</td>
+                                <td>{{ $message->present()->getTags() }}</td>
+                                <td>{{ $message->present()->getNote() }}</td>
+                                <td>{{ $message->present()->Getsubject() }}</td>
+                                <td>{{ $message->present()->link() }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a class="btn btn-primary" href="{{ route('message.edit', $message) }}">Editar</a>

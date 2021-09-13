@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Presenters\Users\UserPresenter;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -87,5 +88,10 @@ class User extends Authenticatable
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable')->withTimestamps();
+    }
+
+    public function present()
+    {
+        return new UserPresenter($this);
     }
 }

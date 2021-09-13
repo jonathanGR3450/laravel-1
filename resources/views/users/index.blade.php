@@ -25,13 +25,13 @@
                     <tbody>
                         @forelse ($users as $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td><a href="{{ route('user.show', $user) }}">{{ $user->name }}</a></td>
+                                <td>{{ $user->present()->getId() }}</td>
+                                <td>{{ $user->present()->link() }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->tags->pluck('name')->implode(', ') }}</td>
-                                <td>{{ $user->note->body ?? '' }}</td>
+                                <td>{{ $user->present()->getTags() }}</td>
+                                <td>{{ $user->present()->getNote() }}</td>
                                 <td>
-                                    {!! $user->roles->pluck('display_name')->implode(' - ') !!}
+                                    {{ $user->present()->getRoles() }}
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
