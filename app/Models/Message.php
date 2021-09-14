@@ -16,6 +16,7 @@ class Message extends Model
         'email',
         'subject',
         'content',
+        'user_id',
     ];
 
     protected $hidden = [

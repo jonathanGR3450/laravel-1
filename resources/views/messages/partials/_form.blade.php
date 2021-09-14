@@ -57,4 +57,4 @@
         </span>
     @enderror
 </div>
-<button class="btn btn-primary btn-lg btn-block">{{ $btnText }}</button>
+<input type="submit" class="btn btn-primary btn-lg btn-block" value="{{ $btnText }}">
