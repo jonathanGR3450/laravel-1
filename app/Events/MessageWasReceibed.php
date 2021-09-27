@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageWasReceibed
+class MessageWasReceibed implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -32,6 +32,11 @@ class MessageWasReceibed
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('message-channel');
+    }
+
+    public function broadcastWith()
+    {
+        return ['message' => $this->message];
     }
 }

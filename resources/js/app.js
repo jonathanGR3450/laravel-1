@@ -9,3 +9,9 @@ require('./bootstrap');
 $('form').on('submit', function () {
     $(this).find('input[type=submit]').attr('disabled', true);
 })
+
+Echo.channel('message-channel')
+    .listen('MessageWasReceibed', (data) => {
+        console.log('lol');
+        console.log(data);
+    } );
