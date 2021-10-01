@@ -25,72 +25,11 @@ use Illuminate\Support\Facades\Route;
 //     echo "<pre>$query->sql</pre>";
 // });
 
-// Tag::create([
-//     "name" => "importante",
-// ]);
-
-// Tag::create([
-//     "name" => "no importante",
-// ]);
-
-// Note::create([
-//     "body" => "nota usuario dos",
-//     'notable_id' => '2',
-//     'notable_type' => 'App\Models\User',
-// ]);
-
-// Note::create([
-//     "body" => "nota usuario tres",
-//     'notable_id' => '3',
-//     'notable_type' => 'App\Models\User',
-// ]);
-
-// Note::create([
-//     "body" => "nota mensaje ocho",
-//     'notable_id' => '8',
-//     'notable_type' => 'App\Models\Message',
-// ]);
-
-// Note::create([
-//     "body" => "nota mensaje tres",
-//     'notable_id' => '3',
-//     'notable_type' => 'App\Models\Message',
-// ]);
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-// Role::create([
-//     "name" => "mod",
-//     "display_name" => "moderator",
-//     "description" => 'moderador del sitio',
-// ]);
-// Role::create([
-//     "name" => "admin",
-//     "display_name" => "administrator",
-//     "description" => 'administrador del sitio',
-// ]);
-
-// User::create([
-//     "name" => "jonathan",
-//     "last_name" => "garzon",
-//     "email" => "jonatangarzon95@gmail.com",
-//     "password" => bcrypt('12345678'),
-// ]);
-
-// User::create([
-//     "name" => "andres",
-//     "last_name" => "garzon",
-//     "email" => "cemunidosprueba@gmail.com",
-//     "password" => bcrypt('12345678'),
-// ]);
-// User::create([
-//     "name" => "jaime",
-//     "last_name" => "garzon",
-//     "email" => "jonathan.garzon.ruiz@unillanos.edu.co",
-//     "password" => bcrypt('12345678'),
-// ]);
 
 // crear rutas enviandole parametros opcionales
 Route::get('saludo/{nombre?}', function ($nombre = 'invitado')

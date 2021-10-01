@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
+    # image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
     tty: true
@@ -36,21 +36,38 @@ services:
       - app-network
 
   #MySQL Service
+  # db:
+  #   image: mysql:5.7.22
+  #   container_name: db
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_DATABASE: laravel_pruebas
+  #     MYSQL_ROOT_PASSWORD: secret
+  #     SERVICE_TAGS: dev
+  #     SERVICE_NAME: mysql
+  #   volumes:
+  #     - ./data/dbdata:/var/lib/mysql
+  #     - ./mysql/my.cnf:/etc/mysql/my.cnf
+  #   networks:
+  #     - app-network
+
   db:
-    image: mysql:5.7.22
+    image: postgres:12.8-alpine
     container_name: db
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_DATABASE: laravel_pruebas
-      MYSQL_ROOT_PASSWORD: secret
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: laravel_pruebas
+      PGDATA: /tmp
     volumes:
-      - ./data/dbdata:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/dbdata:/var/lib/postgresql/data
     networks:
       - app-network
 
